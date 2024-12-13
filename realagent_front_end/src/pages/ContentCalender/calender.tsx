@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight, IconX } from "@tabler/icons-react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube, FaTiktok } from "react-icons/fa";
+import { useAppSelector } from '../../store';
 
 // Mock function to fetch posts for the selected date
 const fetchPostsForDate = (date: string) => {
@@ -77,6 +78,7 @@ const Calendar: React.FC = () => {
   const [editHashtags, setEditHashtags] = useState(""); // Edited hashtags
   const [selectedIcons, setSelectedIcons] = useState<string[]>([]); // Array of selected icons for the post
   const [iconVisible, setIconVisible] = useState(false);
+  const userData = useAppSelector((state) => state.authentication.userData);
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const currentMonth = currentDate.getMonth();
@@ -166,14 +168,14 @@ const Calendar: React.FC = () => {
       <Flex justify="space-between" align="center" mb="16px">
         <Flex direction="column">
           <Text fw="bold" size="lg">
-            Dan's Calendar
+            {userData.firstName}'s Calendar
           </Text>
           <Text size="sm" color="dimmed">
             View and manage all your calendar events
           </Text>
         </Flex>
         <Text size="sm" color="dimmed">
-          Synced: example@gmail.com
+          Synced: {userData.email ?? 'example@gmail.com'}
         </Text>
       </Flex>
       <Divider my="sm" labelPosition="center" />
